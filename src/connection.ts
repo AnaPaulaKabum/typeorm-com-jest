@@ -10,25 +10,15 @@ const connection = {
     await getConnection().close();
   },
 
-  async clear() {
+  async clear(tablename: string) {
     const connection = getConnection();
-    const entities = connection.entityMetadatas;
-
-    entities.forEach(async entity => {
-      console.log(entity.name);
-      // const repository = connection.getRepository(entity.name);
-      // await repository.query(`DELETE FROM ${entity.tableName}`);
-    });
+    const repository = connection.getRepository(tablename);
+    await repository.query(`DELETE FROM ${tablename}`);
   },
 
-  async createUser() {
+  async createUser(user: User) {
     const connection = getConnection();
     const repository = connection.getRepository(User);
-
-    const user = new User();
-    user.age = 19;
-    user.firstName = 'ana';
-    user.lastName = 'paula';
 
     await repository.save(user);
   },

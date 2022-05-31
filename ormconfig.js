@@ -7,7 +7,7 @@ module.exports = {
   database: 'teste',
   synchronize: true,
   entities: ['src/database/entities/*{.ts,.js}'],
-  dropSchema: true,
+  //dropSchema: true,
   /*
   logging: false,
   migrationsRun: true,
