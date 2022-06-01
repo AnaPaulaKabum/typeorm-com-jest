@@ -5,7 +5,7 @@ import { UserRepository } from '../src/database/repository/UserRepository';
 describe('users', () => {
   let userRepository: UserRepository;
 
-  //Executa uma função antes de qualquer um dos testes
+  //Executa uma função para o grupo de testes
   beforeAll(async () => {
     const tableName = 'user';
     await connection.create();
@@ -13,12 +13,12 @@ describe('users', () => {
     userRepository = new UserRepository(connection.getRepository(tableName));
   });
 
-  //Limpar os registros depois de cada teste.
-  afterEach(async () => {
-    //await connection.clear('user');
+  //fazer algo a cada teste
+  beforeEach(async () => {
+    await connection.clear('user');
   });
 
-  //Executa uma função depois de qualquer um dos testes
+  //Executa uma função depois do grupo de testes
   afterAll(async () => {
     await connection.close();
   });
@@ -26,8 +26,13 @@ describe('users', () => {
     const user = new User();
     user.age = 19;
     user.firstName = 'ana';
-    user.lastName = 'paula';
+    user.lastName = 'fernandes';
     const userSave = await userRepository.save(user);
     expect(userSave.id).toBeTruthy();
+  });
+
+  it('findAll user', async () => {
+    const listUser = await userRepository.findAll();
+    expect(listUser.length).toBe(0);
   });
 });
