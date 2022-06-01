@@ -22,7 +22,7 @@ describe('users', () => {
   afterAll(async () => {
     await connection.close();
   });
-  it('creates a user', async () => {
+  it('create a user', async () => {
     const user = new User();
     user.age = 19;
     user.firstName = 'ana';
@@ -34,5 +34,22 @@ describe('users', () => {
   it('findAll user', async () => {
     const listUser = await userRepository.findAll();
     expect(listUser.length).toBe(0);
+  });
+
+  it('update user', async () => {
+    const userUpdate = new User();
+    userUpdate.age = 19;
+    userUpdate.firstName = 'ana';
+    userUpdate.lastName = 'fernandes';
+    const userSave = await userRepository.save(userUpdate);
+
+    userUpdate.age = 25;
+    userUpdate.firstName = 'paula';
+
+    const resultUpdate = await userRepository.update(userSave.id, userUpdate);
+    expect(resultUpdate?.id).toBe(userSave.id);
+    expect(resultUpdate?.age).toBe(userUpdate.age);
+    expect(resultUpdate?.lastName).toBe(userUpdate.lastName);
+    expect(resultUpdate?.firstName).toBe(userUpdate.firstName);
   });
 });
