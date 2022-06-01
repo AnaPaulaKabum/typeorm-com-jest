@@ -14,7 +14,7 @@ describe('users', () => {
   });
 
   //fazer algo a cada teste
-  beforeEach(async () => {
+  afterEach(async () => {
     await connection.clear('user');
   });
 
