@@ -5,15 +5,14 @@ module.exports = {
   username: 'root',
   password: 'root',
   database: 'teste',
+  //synchronize: false,
   entities: ['src/database/entities/*{.ts,.js}'],
   migrations: ['src/database/migrations/*.ts'],
   migrationsRun: true,
-  cli: {
+  logging: ['query'], //all
+  /*cli: {
     entitiesDir: 'src/database/entities',
     migrationsDir: 'src/database/migrations',
-  },
+  },*/
   //dropSchema: true,
-  /*
-  logging: false,
-*/
 };
