@@ -1,5 +1,4 @@
-import { createConnection, getConnection } from 'typeorm';
-import { User } from './database/entities/User';
+import { createConnection, getConnection, Repository } from 'typeorm';
 
 const connection = {
   async create() {
@@ -10,17 +9,15 @@ const connection = {
     await getConnection().close();
   },
 
-  async clear(tablename: string) {
+  async clear(tableName: string) {
     const connection = getConnection();
-    const repository = connection.getRepository(tablename);
-    await repository.query(`DELETE FROM ${tablename}`);
+    const repository = connection.getRepository(tableName);
+    await repository.query(`DELETE FROM ${tableName}`);
   },
 
-  async createUser(user: User) {
+  getRepository(tableName: string): Repository<any> {
     const connection = getConnection();
-    const repository = connection.getRepository(User);
-
-    await repository.save(user);
+    return connection.getRepository(tableName);
   },
 };
 export default connection;
