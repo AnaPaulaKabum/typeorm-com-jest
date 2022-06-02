@@ -1,4 +1,4 @@
-import connection from '../src/connection';
+import connection from '../src/database/connection';
 import { User } from '../src/database/entities/User';
 import { UserRepository } from '../src/database/repository/UserRepository';
 
