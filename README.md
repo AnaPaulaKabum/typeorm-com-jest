@@ -27,9 +27,9 @@ Função cli.migrationsDir direnciona os arquivos de migrations ao utilizar o re
   migrations: ['src/database/migrations/*.ts'],
   migrationsRun: true,
   logging: ['query'], //all
-  /*cli: {
+  cli: {
     migrationsDir: 'src/database/migrations',
-  },*/
+  },
   //dropSchema: true,
 ``` 
 Mais informações em: https://typeorm.io/data-source-options#common-data-source-options
