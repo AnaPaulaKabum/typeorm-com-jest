@@ -23,23 +23,16 @@ describe('users', () => {
     await connection.close();
   });
   it('create a user', async () => {
-    const user = new User();
-    user.age = 19;
-    user.firstName = 'ana';
-    user.lastName = 'fernandes';
+    const user = createUserFake();
     const userSave = await userRepository.save(user);
     expect(userSave.id).toBeTruthy();
   });
 
   it('update user', async () => {
-    const userUpdate = new User();
-    userUpdate.age = 19;
-    userUpdate.firstName = 'ana';
-    userUpdate.lastName = 'fernandes';
+    const userUpdate = createUserFake();
     const userSave = await userRepository.save(userUpdate);
-
-    userUpdate.age = 25;
-    userUpdate.firstName = 'paula';
+    userUpdate.age = 26;
+    userUpdate.firstName = 'ana';
 
     const resultUpdate = await userRepository.update(userSave.id, userUpdate);
     expect(resultUpdate?.id).toBe(userSave.id);
@@ -54,11 +47,8 @@ describe('users', () => {
   });
 
   it('findAll with 1 register', async () => {
-    const userUpdate = new User();
-    userUpdate.age = 19;
-    userUpdate.firstName = 'ana';
-    userUpdate.lastName = 'fernandes';
-    await userRepository.save(userUpdate);
+    const user = createUserFake();
+    await userRepository.save(user);
 
     let listUser = await userRepository.findAll();
     expect(listUser.length).toBe(1);
@@ -66,9 +56,7 @@ describe('users', () => {
 
   it('delete user', async () => {
     const userUpdate = new User();
-    userUpdate.age = 19;
-    userUpdate.firstName = 'ana';
-    userUpdate.lastName = 'fernandes';
+    const user = createUserFake();
     const userSave = await userRepository.save(userUpdate);
 
     await userRepository.delete(userSave.id);
@@ -76,3 +64,11 @@ describe('users', () => {
     expect(listUser.length).toBe(0);
   });
 });
+
+const createUserFake = (): User => {
+  const user = new User();
+  user.age = 25;
+  user.firstName = 'ana paula';
+  user.lastName = 'fernandes';
+  return user;
+};
