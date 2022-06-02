@@ -3,7 +3,37 @@
 
 Repositório: src/database/repository/UserRepository.ts
 
-Teste: __tests__/user.test.ts
+Teste: \_\_tests\_\_/user.test.ts
+
+## Arquivo de configuração do TypeORM:
+
+Função synchronize é utilizada para criar o banco de acordo com as entitys, não é recomendavel para bancos em produção. Nesse exemplo em vez de utilizar esse recurso foi utilizado as migrations que possui comandos de criação nos bancos, configurado pelas funções <i>migrations</i> que possui a o caminho e <i> migrationsRun</i> como true.
+
+Função dropSchame é para descarta o esquema sempre que a fonte de dados está sendo inicializada, esse recurso vai ser controlado pelos testes.
+
+Função logging ativa os recursos de log no terminal, nesse caso quero análisar apenas os de query.
+
+Função cli.migrationsDir direnciona os arquivos de migrations ao utilizar o recurso cli.
+
+``` 
+  type: 'mysql',
+  host: 'localhost',
+  port: 3306,
+  username: 'root',
+  password: 'root',
+  database: 'teste',
+  //synchronize: true,
+  entities: ['src/database/entities/*{.ts,.js}'],
+  migrations: ['src/database/migrations/*.ts'],
+  migrationsRun: true,
+  logging: ['query'], //all
+  /*cli: {
+    migrationsDir: 'src/database/migrations',
+  },*/
+  //dropSchema: true,
+``` 
+Mais informações em: https://typeorm.io/data-source-options#common-data-source-options
+
 
 ## Código de teste: 
 
@@ -38,7 +68,7 @@ Ao finalizar todos os testes do grupo, será necessário fechar a conexão:
 ```
 ### Realizando teste de CRUD:
 
-Create: Testando se retornou Truthy, ou seja que não seja falsy (false, 0, '',undefined, null, NaN)
+<b> Create:</b> Testando se retornou Truthy, ou seja que não seja falsy (false, 0, '',undefined, null, NaN)
 
 ```
     const user = createUserFake();
@@ -46,9 +76,7 @@ Create: Testando se retornou Truthy, ou seja que não seja falsy (false, 0, '',u
     expect(userSave.id).toBeTruthy();
 ``` 
 
-Read:
-
-Dividido em dois testes, primeiro testando quando não possui nenhum registro no banco:
+<b>Read:</b> Dividido em dois testes, primeiro testando quando não possui nenhum registro no banco:
 
 ```
     const listUser = await userRepository.findAll();
@@ -65,9 +93,7 @@ Segundo quando já possuir um registro:
     expect(listUser.length).toBe(1);
 ```
 
-
-
-Update: Será inserido um registro, e depois será modificado. O teste será se os campos foram atualizados.
+<b> Update: </b> Será inserido um registro, e depois será modificado. O teste será se os campos foram atualizados.
 
 ```
     const userUpdate = createUserFake();
@@ -81,8 +107,7 @@ Update: Será inserido um registro, e depois será modificado. O teste será se 
     expect(resultUpdate?.lastName).toBe(userUpdate.lastName);
     expect(resultUpdate?.firstName).toBe(userUpdate.firstName);
 ```
-
-Delete: Será inserido um usuário e depois deletado, ao pesquisar pelos registros no banco deverá ser encontrado 0 registros.
+<b> Delete: </b> Será inserido um usuário e depois deletado, ao pesquisar pelos registros no banco deverá ser encontrado 0 registros.
 
 ```
 
