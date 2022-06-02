@@ -19,6 +19,7 @@ export class UserRepository {
   }
 
   async update(id: number, user: User): Promise<User | undefined> {
+    const rows_affected = 1;
     const result = await this.userRepository.update(
       { id: id },
       { firstName: user.firstName, lastName: user.lastName, age: user.age },
@@ -26,7 +27,7 @@ export class UserRepository {
 
     if (!result.affected) return undefined;
 
-    if (result.affected === 1) {
+    if (result.affected === rows_affected) {
       return this.findOne(id);
     }
     return undefined;
