@@ -7,7 +7,7 @@ Teste: \_\_tests\_\_/user.test.ts
 
 ## Arquivo de configuração do TypeORM:
 
-Função synchronize é utilizada para criar o banco de acordo com as entitys, não é recomendavel para bancos em produção. Nesse exemplo em vez de utilizar esse recurso foi utilizado as migrations que possui comandos de criação nos bancos, configurado pelas funções <i>migrations</i> que possui a o caminho e <i> migrationsRun</i> como true.
+Função synchronize é utilizada para criar o banco de acordo com as entitys, não é recomendavel para bancos em produção. Nesse exemplo em vez de utilizar esse recurso foi utilizado as migrations que possui comandos de criação, foi configurado pelas funções <i>migrations</i> que possui a o caminho e <i> migrationsRun</i> como true.
 
 Função dropSchame é para descarta o esquema sempre que a fonte de dados está sendo inicializada, esse recurso vai ser controlado pelos testes.
 
@@ -110,7 +110,6 @@ Segundo quando já possuir um registro:
 <b> Delete: </b> Será inserido um usuário e depois deletado, ao pesquisar pelos registros no banco deverá ser encontrado 0 registros.
 
 ```
-
     const userUpdate = new User();
     const user = createUserFake();
     const userSave = await userRepository.save(userUpdate);
@@ -118,11 +117,10 @@ Segundo quando já possuir um registro:
     await userRepository.delete(userSave.id);
     const listUser = await userRepository.findAll();
     expect(listUser.length).toBe(0);
-
 ```
 
 
 
-## Criar migration:
+### Criar migration:
 
 yarn typeorm migration:create -n NameMigration
