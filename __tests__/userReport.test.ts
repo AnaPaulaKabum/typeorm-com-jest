@@ -26,11 +26,12 @@ describe('UserReport', () => {
 
     const result = await userReport.yearUserApplication();
 
+    const returnExpected = [
+      { age: 25, total: '2' },
+      { age: 40, total: '1' },
+    ];
     expect(result).toBeTruthy();
-    expect(result[0].age).toBe(25);
-    expect(result[0].total).toBe('2');
-    expect(result[1].age).toBe(40);
-    expect(result[1].total).toBe('1');
+    expect(result).toEqual(returnExpected);
   });
 });
 
