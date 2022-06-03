@@ -119,7 +119,63 @@ Segundo quando já possuir um registro:
     expect(listUser.length).toBe(0);
 ```
 
+### Teste para Relatório:
 
+Foi criado a classe UserReport com a função yearUserApplactation, que tem um sql que será utilizado para gerar as informações do relatório:
+
+```
+  async yearUserApplication(): Promise<resultDTO[]> {
+    const sql = `select age, count(*) as total from user group by age  ORDER  by age  `;
+    return await this.userRepository.query(sql);
+  }
+
+```
+
+Para controlar os dados, foi criado a função generateFix que irá inserir os dados passados pelo parametro. 
+
+```
+  async generateFix(listUser: Array<User>) {
+    for (var user of listUser) {
+      if (user) {
+        await this.repoistoryUser.save(user);
+      }
+    }
+  }
+```
+
+No arquivo de UserReport.test, tem beforeAll para criar a conexão, limpar a tabela, e criar o objeto de relatorio e o de UserSeed. Depois teremos a função afterAll, que limpara os dados e fechará a conexão. 
+
+```
+  beforeAll(async () => {
+    const tableName = 'user';
+    await connection.create();
+    await connection.clear(tableName);
+    userRepository = new UserRepository(connection.getRepository(tableName));
+    userReport = new UserReport(userRepository);
+    userSeed = new UserSeed(userRepository);
+  });
+
+  afterAll(async () => {
+    await connection.clear('user');
+    await connection.close();
+  });
+
+```
+
+Por fim, temos o teste: 
+
+```
+    await userSeed.generateFix(createUserFake());
+
+    const resultReport = await userReport.yearUserApplication();
+
+    const returnExpected = [
+      { age: 25, total: '2' },
+      { age: 40, total: '1' },
+    ];
+    expect(resultReport).toBeTruthy();
+    expect(resultReport).toEqual(returnExpected);
+```
 
 ### Criar migration:
 
