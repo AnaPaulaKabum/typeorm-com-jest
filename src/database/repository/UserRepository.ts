@@ -36,4 +36,8 @@ export class UserRepository {
   async delete(id: number): Promise<any> {
     return this.userRepository.delete({ id: id });
   }
+
+  async query(sql: string): Promise<any> {
+    return this.userRepository.query(sql);
+  }
 }
