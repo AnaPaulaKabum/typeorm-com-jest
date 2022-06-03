@@ -9,7 +9,7 @@ module.exports = {
   entities: ['src/database/entities/*{.ts,.js}'],
   migrations: ['src/database/migrations/*.ts'],
   migrationsRun: true,
-  logging: ['query'], //all
+  //logging: ['query'], //all
   cli: {
     migrationsDir: 'src/database/migrations',
   },
